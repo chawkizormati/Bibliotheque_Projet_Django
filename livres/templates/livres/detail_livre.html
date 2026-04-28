@@ -1,0 +1,56 @@
+{% extends 'livres/base.html' %}
+{% block title %}{{ livre.titre }} — BiblioTech{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 text-center mb-4">
+        {% if livre.couverture %}
+        <img src="{{ livre.couverture.url }}" alt="{{ livre.titre }}" class="img-fluid rounded shadow" style="max-height: 350px; object-fit: cover;">
+        {% else %}
+        <div style="background: linear-gradient(135deg, #1a1a2e, #0f3460); height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i class="bi bi-book text-white" style="font-size: 5rem; opacity: 0.4;"></i>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-9">
+        <div class="card p-4">
+            <h2 class="fw-bold mb-1">{{ livre.titre }}</h2>
+            <p class="text-muted fs-5 mb-3"><i class="bi bi-person me-1"></i>{{ livre.auteur }}</p>
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <div class="bg-light rounded p-3 text-center">
+                        <div class="text-muted small">Catégorie</div>
+                        <strong>{{ livre.categorie.nom|default:"—" }}</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-light rounded p-3 text-center">
+                        <div class="text-muted small">Année</div>
+                        <strong>{{ livre.annee_publication }}</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-light rounded p-3 text-center">
+                        <div class="text-muted small">Statut</div>
+                        {% if livre.disponible %}
+                        <span class="badge badge-disponible fs-6">Disponible</span>
+                        {% else %}
+                        <span class="badge badge-indisponible fs-6">Indisponible</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if livre.description %}
+            <h5 class="fw-bold">Description</h5>
+            <p class="text-muted">{{ livre.description }}</p>
+            {% endif %}
+            <p class="text-muted small"><i class="bi bi-calendar3 me-1"></i>Ajouté le {{ livre.date_ajout|date:"d/m/Y à H:i" }}</p>
+            <div class="d-flex gap-2 mt-3">
+                <a href="{% url 'modifier_livre' livre.pk %}" class="btn btn-warning"><i class="bi bi-pencil me-1"></i>Modifier</a>
+                <a href="{% url 'supprimer_livre' livre.pk %}" class="btn btn-danger"><i class="bi bi-trash me-1"></i>Supprimer</a>
+                <a href="{% url 'liste_livres' %}" class="btn btn-outline-secondary ms-auto"><i class="bi bi-arrow-left me-1"></i>Retour</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

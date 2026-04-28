@@ -1,0 +1,36 @@
+{% extends 'livres/base.html' %}
+{% block title %}Catégories — BiblioTech{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h2 class="mb-1 fw-bold"><i class="bi bi-tags me-2"></i>Catégories</h2>
+        <p class="mb-0 opacity-75">{{ categories|length }} catégorie(s)</p>
+    </div>
+    <a href="{% url 'ajouter_categorie' %}" class="btn btn-accent"><i class="bi bi-plus-circle me-1"></i>Nouvelle catégorie</a>
+</div>
+
+<div class="row g-3">
+    {% for cat in categories %}
+    <div class="col-md-4">
+        <div class="card p-3 d-flex flex-row align-items-center justify-content-between">
+            <div>
+                <i class="bi bi-tag-fill text-danger me-2"></i>
+                <strong>{{ cat.nom }}</strong>
+                <div class="text-muted small">{{ cat.livres.count }} livre(s)</div>
+            </div>
+            <div class="d-flex gap-1">
+                <a href="{% url 'modifier_categorie' cat.pk %}" class="btn btn-sm btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                <a href="{% url 'supprimer_categorie' cat.pk %}" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <i class="bi bi-tags" style="font-size: 4rem; color: #ccc;"></i>
+        <h4 class="mt-3 text-muted">Aucune catégorie</h4>
+        <a href="{% url 'ajouter_categorie' %}" class="btn btn-accent mt-2">Créer une catégorie</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

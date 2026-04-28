@@ -1,0 +1,70 @@
+{% extends 'livres/base.html' %}
+{% block title %}{{ action }} un livre — BiblioTech{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h2 class="mb-0 fw-bold">
+                <i class="bi bi-{% if action == 'Ajouter' %}plus-circle{% else %}pencil-square{% endif %} me-2"></i>
+                {{ action }} un livre
+            </h2>
+        </div>
+        <div class="card p-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Titre *</label>
+                        {{ form.titre }}
+                        {% if form.titre.errors %}<div class="text-danger small mt-1">{{ form.titre.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Année *</label>
+                        {{ form.annee_publication }}
+                        {% if form.annee_publication.errors %}<div class="text-danger small mt-1">{{ form.annee_publication.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Auteur *</label>
+                        {{ form.auteur }}
+                        {% if form.auteur.errors %}<div class="text-danger small mt-1">{{ form.auteur.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Catégorie</label>
+                        {{ form.categorie }}
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Description</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Image de couverture</label>
+                        {{ form.couverture }}
+                        {% if livre and livre.couverture %}
+                        <div class="mt-2">
+                            <img src="{{ livre.couverture.url }}" alt="Couverture actuelle" style="height:80px; border-radius:6px;">
+                            <small class="text-muted ms-2">Couverture actuelle</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center">
+                        <div class="form-check form-switch mt-3">
+                            {{ form.disponible }}
+                            <label class="form-check-label fw-semibold ms-2">Disponible</label>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-accent px-4">
+                        <i class="bi bi-save me-1"></i>{{ action }}
+                    </button>
+                    <a href="{% url 'liste_livres' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

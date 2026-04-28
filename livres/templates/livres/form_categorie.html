@@ -1,0 +1,22 @@
+{% extends 'livres/base.html' %}
+{% block title %}{{ action }} catégorie — BiblioTech{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="page-header"><h2 class="mb-0 fw-bold"><i class="bi bi-tag me-2"></i>{{ action }} une catégorie</h2></div>
+        <div class="card p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <label class="form-label fw-semibold">Nom de la catégorie *</label>
+                {{ form.nom }}
+                {% if form.nom.errors %}<div class="text-danger small mt-1">{{ form.nom.errors }}</div>{% endif %}
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-accent px-4"><i class="bi bi-save me-1"></i>{{ action }}</button>
+                    <a href="{% url 'liste_categories' %}" class="btn btn-outline-secondary">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
