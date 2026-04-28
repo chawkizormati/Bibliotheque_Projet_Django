@@ -1,6 +1,5 @@
 
-# 1. Cloner le projet
-git clone <votre-lien-github>
+# 1. Ouvrir le projet
 cd bibliotheque_project
 
 # 2. Créer l'environnement virtuel
